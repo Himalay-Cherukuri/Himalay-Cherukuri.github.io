@@ -18,7 +18,7 @@ SRC = ROOT / "_source"
 OWNER = "Himalay Cherukuri"
 GH_USER = "Himalay-Cherukuri"
 YEAR = date.today().year
-ASSET_VER = "2"
+ASSET_VER = "3"
 
 # ---------------------------------------------------------------- sections
 # To add a section: write a build_<name>() below, append it here, and add a
@@ -52,7 +52,8 @@ def page(*, root, title, heading="", body_html, section="", secroot="", brand_su
     if search and section:
         search_form = (f'<form class="header-search" action="{secroot}search.html" role="search">'
                        f'<input type="search" name="q" placeholder="Search {esc(brand_sub)}…  ( / )" aria-label="Search {esc(brand_sub)}">{search_extra}</form>')
-    brand = f'<a class="brand" href="{root}index.html">{OWNER}</a>'
+    mark = f'<img class="brand-mark" src="{root}assets/mark.png" alt="" width="352" height="160">'
+    brand = f'<a class="brand" href="{root}index.html">{mark}{OWNER}</a>'
     if brand_sub:
         brand += f'<span class="sep" aria-hidden="true">/</span><a class="brand" href="{secroot}index.html"><small style="margin:0">{esc(brand_sub)}</small></a>'
     menu = ('<button class="icon-btn menu-btn" id="menu-btn" aria-label="Open contents" aria-expanded="false" aria-controls="sidebar">☰</button>'
@@ -73,6 +74,9 @@ def page(*, root, title, heading="", body_html, section="", secroot="", brand_su
 <title>{esc(title)}</title>{desc}
 <script>try{{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else if(matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark"}}catch(e){{}}</script>
 <link rel="stylesheet" href="{root}assets/site.css?v={ASSET_VER}">
+<link rel="icon" href="{root}assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{root}assets/favicon-32.png">
+<link rel="apple-touch-icon" href="{root}assets/apple-touch-icon.png">
 </head>
 <body data-page-type="{page_type}" data-section="{section}" data-root="{root}" data-secroot="{secroot}">
 <a class="skip" href="#main">Skip to content</a>
@@ -286,6 +290,7 @@ def build_home(enabled):
         cards.append(f'<a class="card feature" href="{href}"><div class="kicker">{kicker}</div><h3>{title}</h3><p>{desc}</p>'
                      f'<div class="meta">{"".join(f"<span>{m}</span>" for m in meta)}</div></a>')
     body = f"""<div class="hero">
+<img class="hero-logo" src="assets/logo.png" alt="{OWNER}" width="960" height="316">
 <h1>{OWNER}</h1>
 <p class="lede">Welcome — this is my corner of the web. <!-- EDIT ME: replace this with a short intro about yourself --> I use it to publish things I’m reading, studying and building.</p>
 </div>
