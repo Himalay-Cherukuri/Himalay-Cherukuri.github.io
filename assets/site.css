@@ -93,8 +93,6 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .feature{padding:1.4rem 1.5rem}
 .feature h3{font-size:1.4rem}
 .section-title{font-family:var(--sans);display:flex;align-items:baseline;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
-.section-title a{font-size:.85rem}
-.lang-dot{display:inline-block;width:.7em;height:.7em;border-radius:50%;background:var(--accent);margin-right:.3em;vertical-align:-.05em}
 /* paragraphs (Arthashastra) */
 .topic{margin-top:2.2rem}
 .para{position:relative;margin:0 0 1em}

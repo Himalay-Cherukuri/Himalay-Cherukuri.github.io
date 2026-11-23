@@ -90,14 +90,4 @@
     var tmr;q.addEventListener("input",function(){clearTimeout(tmr);tmr=setTimeout(function(){run();history.replaceState(null,"","?q="+encodeURIComponent(q.value))},180)});
     var p=new URLSearchParams(location.search).get("q");if(p){q.value=p}run();
   }
-
-  // GitHub projects (home)
-  var pg=$("#projects");
-  if(pg){var user=pg.dataset.user;
-    fetch("https://api.github.com/users/"+user+"/repos?per_page=100&sort=updated").then(function(r){if(!r.ok)throw r;return r.json()}).then(function(rs){
-      rs=rs.filter(function(r){return !r.fork&&!r.private&&!r.archived});
-      if(!rs.length){pg.innerHTML='<p class="muted">No public repositories yet. Anything you make public on GitHub will show up here automatically.</p>';return}
-      pg.innerHTML=rs.map(function(r){var d=new Date(r.pushed_at||r.updated_at);
-        return '<a class="card" href="'+esc(r.homepage||r.html_url)+'"><div class="kicker">'+esc(r.language||"Repository")+'</div><h3>'+esc(r.name)+'</h3><p>'+esc(r.description||"No description yet.")+'</p><div class="meta"><span>★ '+r.stargazers_count+'</span><span>Updated '+d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"})+'</span></div></a>'}).join("")
-    }).catch(function(){pg.innerHTML='<p>Could not reach GitHub right now. <a href="https://github.com/'+user+'?tab=repositories">See all repositories on GitHub</a>.</p>'})}
 })();

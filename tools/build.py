@@ -21,8 +21,9 @@ YEAR = date.today().year
 ASSET_VER = "3"
 
 # ---------------------------------------------------------------- sections
-# To add a section: write a build_<name>() below, append it here, and add a
-# card in HOME_CARDS. 'enabled' False keeps it out of the generated site.
+# To add a generated section: write a build_<name>() below and append it here.
+# 'enabled' False keeps it out of the generated site.
+# Home-page library cards are assets/library.json, one object per line.
 SECTIONS = [
     {"key": "arthashastra", "enabled": True},
 ]
@@ -277,30 +278,20 @@ Hover a paragraph to see its tagged terms, or browse the <a href="tags/index.htm
     return {"chapters": len(chapters), "books": len(books), "terms": sum(len(t) for t in tags.values())}
 
 # ================================================================ HOME
-HOME_CARDS = {
-    "arthashastra": ('arthashastra/index.html', "Classical text", "Kautilya’s Arthashastra",
-                     "The ancient Indian treatise on statecraft, economics and military strategy — R. Shamasastry’s 1915 translation, organised into 15 books, 150 chapters and 3,351 citable paragraphs with an index of terms.",
-                     ["15 books", "150 chapters", "Index of terms"]),
-}
-
 def build_home(enabled):
+    library = json.loads((ROOT / "assets" / "library.json").read_text(encoding="utf-8"))
     cards = []
-    for key in enabled:
-        href, kicker, title, desc, meta = HOME_CARDS[key]
-        cards.append(f'<a class="card feature" href="{href}"><div class="kicker">{kicker}</div><h3>{title}</h3><p>{desc}</p>'
-                     f'<div class="meta">{"".join(f"<span>{m}</span>" for m in meta)}</div></a>')
+    for item in library:
+        cards.append(f'<a class="card feature" href="{esc(item["href"])}"><h3>{esc(item["title"])}</h3><p>{esc(item["description"])}</p></a>')
     body = f"""<div class="hero">
 <img class="hero-logo" src="assets/logo.png" alt="{OWNER}" width="960" height="316">
 <h1>{OWNER}</h1>
 <p class="lede">Welcome — this is my corner of the web. <!-- EDIT ME: replace this with a short intro about yourself --> I use it to publish things I’m reading, studying and building.</p>
 </div>
 <h2 class="section-title">Library</h2>
-<div class="feature-grid">{''.join(cards)}</div>
-<h2 class="section-title">Projects <a href="https://github.com/{GH_USER}?tab=repositories">All on GitHub →</a></h2>
-<div class="grid" id="projects" data-user="{GH_USER}"><p>Loading public repositories…</p></div>
-<noscript><p><a href="https://github.com/{GH_USER}?tab=repositories">See my repositories on GitHub</a>.</p></noscript>"""
+<div class="feature-grid" id="library">{''.join(cards)}</div>"""
     html_ = page(root="", title=OWNER, body_html=body, page_type="home", search=False,
-                 description=f"{OWNER} — reading library and projects.")
+                 description=f"{OWNER} — a personal library.")
     html_ = html_.replace('<div class="shell no-side">', '<div class="home">').replace('<div class="reading">', '<div>')
     write(ROOT / "index.html", html_); count("home")
     nf = page(root="/", title="Page not found · " + OWNER, heading="Page not found",

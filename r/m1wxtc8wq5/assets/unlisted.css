@@ -29,7 +29,8 @@ h1,h2,h3,h4{font-family:var(--sans);line-height:1.25;color:var(--ink)}
 h1{font-size:2rem;margin:.2em 0 .2em} h2{font-size:1.35rem;margin:2em 0 .6em} h3{font-size:1.1rem}
 /* header */
 .site-header{position:sticky;top:0;z-index:20;height:var(--header-h);display:flex;align-items:center;gap:.75rem;padding:0 1rem;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);font-family:var(--sans)}
-.brand{font-weight:700;text-decoration:none;color:var(--ink);white-space:nowrap;font-size:1rem}
+.brand{display:inline-flex;align-items:center;gap:.42rem;flex-shrink:0;font-weight:700;text-decoration:none;color:var(--ink);white-space:nowrap;font-size:1rem}
+.brand-mark{height:1.65rem;width:auto;display:block;flex:none}
 .brand small{font-weight:500;color:var(--muted);margin-left:.4em}
 .brand .sep{color:var(--muted);margin:0 .35em}
 .header-search{margin-left:auto;display:flex;flex:0 1 340px}
